@@ -26,11 +26,15 @@ const Tasks = (() =>
 
 
 
-    function editTask (projectIndex, taskIndex, title, priority, time)
+    function editTask (projectIndex, taskIndex, title, priority, time, done)
     {
         Projects.projectsList[ projectIndex ].tasks[ taskIndex ].title = title;
         Projects.projectsList[ projectIndex ].tasks[ taskIndex ].priority = priority;
         Projects.projectsList[ projectIndex ].tasks[ taskIndex ].time = time;
+        Projects.projectsList[ projectIndex ].tasks[ taskIndex ].done = done;
+
+
+        localStorage.removeItem('projects');
         localStorage.setItem('projects', JSON.stringify(Projects.projectsList));
 
     }

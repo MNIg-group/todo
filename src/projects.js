@@ -25,6 +25,8 @@ const Projects = (() =>
     {
         const newProject = new Project(title, icon, color);
         projectsList.push(newProject);
+
+        localStorage.removeItem('projects');
         localStorage.setItem('projects', JSON.stringify(projectsList));
     }
 
@@ -34,12 +36,15 @@ const Projects = (() =>
         projectsList[ index ].icon = icon;
         projectsList[ index ].color = color;
 
+        localStorage.removeItem('projects');
         localStorage.setItem('projects', JSON.stringify(projectsList));
     }
 
     function removeProject (index)
     {
         projectsList.splice(index, 1);
+
+        localStorage.removeItem('projects');
         localStorage.setItem('projects', JSON.stringify(projectsList));
     }
 
