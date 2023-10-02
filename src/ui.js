@@ -19,7 +19,10 @@ const UI = (() =>
     inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Done</td><td>Time</td>`;
     inboxProjectList.appendChild(inboxHeader);
 
-    const todayList = document.createElement('ul');
+    const todayList = document.createElement('table');
+    const todayHeader = document.createElement('thead');
+    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Done</td><td>Time</td>`;
+    todayList.appendChild(todayHeader);
 
     const root = document.createElement('div');
     root.classList.add('todoRoot');
@@ -75,13 +78,28 @@ const UI = (() =>
     {
         mainHeader.innerText = `Today`;
         mainPage.lastChild.replaceWith(todayList);
-        let taskList = Projects.projectsList[ 1 ].tasks;
-        for (let task of taskList)
+        let list = Tasks.listofTask();
+        // Avoid Duplication
+        try
         {
-            if (`${ task.time <= 24 }`)
+            let tableRows = todayList.rows.length;
+            let i = 1;
+            while (tableRows > i)
             {
-                let list = document.createElement('li');
-                list.innerHTML = `${ task.title } ${ task.priority } ${ task.time } ${ task.done }`;
+                todayList.deleteRow(i);
+            }
+
+        } catch (error)
+        {
+            console.error("Enough Deletion!");
+        }
+
+        for (let box of list)
+        {
+            if (`${ box.time <= 24 }`)
+            {
+                let list = document.createElement('tr');
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
                 todayList.appendChild(list);
             }
         }
