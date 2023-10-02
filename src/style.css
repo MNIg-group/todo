@@ -1,0 +1,55 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    text-decoration: none;
+    list-style: none;
+    padding: 0;
+    transition: all 0.2s ease-in-out;
+    scroll-behavior: smooth;
+
+}
+.todoRoot{
+    display: flex;
+}
+.sidebar{
+    width: 20%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 1rem;
+    background-color: blue;
+    overflow: hidden;
+}
+.list{
+    overflow-y:auto;
+    height: 80%;
+    padding-bottom: 2rem;
+    margin-top: 1rem;
+}
+.mainpage{
+    padding: 2rem;
+    overflow-y: scroll;
+    width: 80%;
+    height: 100vh;
+}
+.button{
+    color: yellow;
+    background-color: rgba(0, 0, 0, 0.368);
+    cursor: pointer;
+    margin-bottom: .5rem;
+    padding: 5px;
+}
+.button:hover{
+    background-color: black;
+}
+.focus{
+    background-color: black;
+}
+table{
+    width: 80%;
+}
+td{
+    padding: 1rem;
+    border: solid black;
+}
