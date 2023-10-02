@@ -23,8 +23,8 @@ const Tasks = (() =>
 
         // console.log(Projects.projectsList);//////////////////////////////Debug
     }
-     
-    
+
+
 
     function editTask (projectIndex, taskIndex, title, priority, time, done)
     {
@@ -43,10 +43,37 @@ const Tasks = (() =>
         console.log("Task have been removed");
     }
 
+    //  Gain list of tasks from local storage
+    let inboxList = [];
+    function listofTask ()
+    {
+        if (localStorage.getItem('inbox') === null)
+        {
+            for (let x = 0; x < Projects.projectsList.length; x++)
+            {
+                for (let task of Projects.projectsList[ x ].tasks)
+                {
+                    inboxList.push(task);
+                }
+            }
+            localStorage.setItem('inbox', JSON.stringify(inboxList));
+
+            return inboxList;
+        }
+        else
+        {
+            inboxList = JSON.parse(localStorage.getItem('inbox'));
+
+            return inboxList;
+        }
+
+    }
+
     return {
         createTask,
         editTask,
         removeTask,
+        listofTask,
     };
 })()
 

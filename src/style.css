@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     text-decoration: none;
@@ -8,10 +8,15 @@
     scroll-behavior: smooth;
 
 }
-.todoRoot{
+:root{
+    --glay-color:rgba(0, 0, 0, 0.368);
+}
+
+.todoRoot {
     display: flex;
 }
-.sidebar{
+
+.sidebar {
     width: 20%;
     height: 100vh;
     display: flex;
@@ -21,35 +26,49 @@
     background-color: blue;
     overflow: hidden;
 }
-.list{
-    overflow-y:auto;
+
+.list {
+    overflow-y: auto;
     height: 80%;
     padding-bottom: 2rem;
     margin-top: 1rem;
 }
-.mainpage{
+
+.mainpage {
     padding: 2rem;
     overflow-y: scroll;
     width: 80%;
     height: 100vh;
 }
-.button{
+
+.button {
     color: yellow;
-    background-color: rgba(0, 0, 0, 0.368);
+    background-color:var(--glay-color);
     cursor: pointer;
     margin-bottom: .5rem;
     padding: 5px;
 }
-.button:hover{
+
+.button:hover {
     background-color: black;
 }
-.focus{
+
+.focus {
     background-color: black;
 }
-table{
+
+table {
     width: 80%;
+    border-radius: 5px;
+    background-color: var(--glay-color);
 }
-td{
+
+thead {
+    background-color: black;
+    color: yellow;
+}
+
+td {
     padding: 1rem;
     border: solid black;
 }

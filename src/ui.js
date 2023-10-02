@@ -1,5 +1,9 @@
 import './style.css';
 import Projects from './projects';
+import Tasks from './tasks';
+
+
+
 // fontawesome
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
@@ -10,8 +14,11 @@ import '@fortawesome/fontawesome-free/js/brands'
 const UI = (() =>
 {
 
-    const projectLists = document.createElement('ul');
-    const inboxProjectList = document.createElement('ul');
+    const inboxProjectList = document.createElement('table');
+    const inboxHeader = document.createElement('thead');
+    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Done</td><td>Time</td>`;
+    inboxProjectList.appendChild(inboxHeader);
+
     const todayList = document.createElement('ul');
 
     const root = document.createElement('div');
@@ -30,22 +37,35 @@ const UI = (() =>
     const inbox = document.createElement('li');
     inbox.classList.add('button');
     inbox.innerText = `Inbox`;
-    localStorage.setItem('inbox', JSON.stringify(inboxProjectList));
     inbox.addEventListener('click', () =>
     {
         mainHeader.innerText = `Inbox`;
         mainPage.lastChild.replaceWith(inboxProjectList);
 
-        for (let i = 0; i < Projects.projectsList.length; i++)
+
+        let list = Tasks.listofTask();
+        // Avoid Duplication
+        try
         {
-            let taskList = Projects.projectsList[ i ].tasks;
-            for (let task of taskList)
+            let tableRows = inboxProjectList.rows.length;
+            let i = 1;
+            while (tableRows > i)
             {
-                let list = document.createElement('li');
-                list.innerHTML = `${ task.title } ${ task.priority } ${ task.time } ${ task.done }`;
-                inboxProjectList.appendChild(list);
+                inboxProjectList.deleteRow(i);
             }
+
+        } catch (error)
+        {
+            console.error("Enough Deletion!");
         }
+        for (let box of list)
+        {
+            let list = document.createElement('tr');
+            list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
+            inboxProjectList.appendChild(list);
+        }
+
+        mainPage.lastChild.replaceWith(inboxProjectList);
     });
     // Today .............................................................
     const today = document.createElement('li');
@@ -66,7 +86,7 @@ const UI = (() =>
             }
         }
     });
-// within a week 
+    // within a week 
     const next7day = document.createElement('li');
     next7day.classList.add('button');
     next7day.innerText = `Next 7 days`;
