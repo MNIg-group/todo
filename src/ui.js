@@ -2,8 +2,6 @@ import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
 
-
-
 // fontawesome
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
@@ -28,6 +26,16 @@ const UI = (() =>
     const weekHeader = document.createElement('thead');
     weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     weekList.appendChild(weekHeader);
+
+    const completedList = document.createElement('table');
+    const completedHeader = document.createElement('thead');
+    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
+    completedList.appendChild(completedHeader);
+
+    const importantList = document.createElement('table');
+    const importantHeader = document.createElement('thead');
+    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
+    importantList.appendChild(importantHeader);
 
     const root = document.createElement('div');
     root.classList.add('todoRoot');
@@ -101,7 +109,7 @@ const UI = (() =>
 
         for (let box of list)
         {
-            if (`${ box.time <= 24 }`)
+            if (box.time <= 24)
             {
                 let list = document.createElement('tr');
                 list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
@@ -135,7 +143,7 @@ const UI = (() =>
 
         for (let box of list)
         {
-            if (`${ box.time <= 168 }`)
+            if (box.time <= 168)
             {
                 let list = document.createElement('tr');
                 list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
@@ -150,6 +158,32 @@ const UI = (() =>
     important.addEventListener('click', () =>
     {
         mainHeader.innerText = `Important`;
+        mainPage.lastChild.replaceWith(importantList);
+        let list = Tasks.listofTask();
+        // Avoid Duplication
+        try
+        {
+            let tableRows = importantList.rows.length;
+            let i = 1;
+            while (tableRows > i)
+            {
+                importantList.deleteRow(i);
+            }
+
+        } catch (error)
+        {
+            console.error("Enough Deletion!");
+        }
+
+        for (let box of list)
+        {
+            if (box.priority == 'high' || box.priority == 'High')
+            {
+                let list = document.createElement('tr');
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
+                importantList.appendChild(list);
+            }
+        }
     });
 
     const completed = document.createElement('li');
@@ -158,6 +192,32 @@ const UI = (() =>
     completed.addEventListener('click', () =>
     {
         mainHeader.innerText = `Completed`;
+        mainPage.lastChild.replaceWith(completedList);
+        let list = Tasks.listofTask();
+        // Avoid Duplication
+        try
+        {
+            let tableRows = completedList.rows.length;
+            let i = 1;
+            while (tableRows > i)
+            {
+                completedList.deleteRow(i);
+            }
+
+        } catch (error)
+        {
+            console.error("Enough Deletion!");
+        }
+
+        for (let box of list)
+        {
+            if (box.done == true)
+            {
+                let list = document.createElement('tr');
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
+                completedList.appendChild(list);
+            }
+        }
     });
 
     upperBody.appendChild(inbox);
