@@ -1,7 +1,7 @@
 node_modules
-# .gitignore
-# ./src/*
-# src/*
-# ./src/*
-# ./node_modules/*
-# node_modules/*
+.gitignore
+./src/*
+src/*
+./src/*
+./node_modules/*
+node_modules/*
