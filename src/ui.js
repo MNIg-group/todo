@@ -16,13 +16,18 @@ const UI = (() =>
 
     const inboxProjectList = document.createElement('table');
     const inboxHeader = document.createElement('thead');
-    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Done</td><td>Time</td>`;
+    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     inboxProjectList.appendChild(inboxHeader);
 
     const todayList = document.createElement('table');
     const todayHeader = document.createElement('thead');
-    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Done</td><td>Time</td>`;
+    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     todayList.appendChild(todayHeader);
+
+    const weekList = document.createElement('table');
+    const weekHeader = document.createElement('thead');
+    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
+    weekList.appendChild(weekHeader);
 
     const root = document.createElement('div');
     root.classList.add('todoRoot');
@@ -111,6 +116,32 @@ const UI = (() =>
     next7day.addEventListener('click', () =>
     {
         mainHeader.innerText = `Next 7 days`;
+        mainPage.lastChild.replaceWith(weekList);
+        let list = Tasks.listofTask();
+        // Avoid Duplication
+        try
+        {
+            let tableRows = weekList.rows.length;
+            let i = 1;
+            while (tableRows > i)
+            {
+                weekList.deleteRow(i);
+            }
+
+        } catch (error)
+        {
+            console.error("Enough Deletion!");
+        }
+
+        for (let box of list)
+        {
+            if (`${ box.time <= 168 }`)
+            {
+                let list = document.createElement('tr');
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
+                weekList.appendChild(list);
+            }
+        }
     });
 
     const important = document.createElement('li');
