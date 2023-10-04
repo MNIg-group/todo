@@ -6,11 +6,19 @@
     padding: 0;
     transition: all 0.2s ease-in-out;
     scroll-behavior: smooth;
+}
 
+.icon {
+    color: ghostwhite;
+    font-weight: bold;
 }
 
 :root {
     --glay-color: rgba(0, 0, 0, 0.368);
+}
+
+body {
+    background-color: whitesmoke;
 }
 
 .todoRoot {
@@ -26,6 +34,12 @@
     padding: 1rem;
     background-color: rgb(68, 68, 246);
     overflow: hidden;
+    color: ghostwhite;
+}
+
+.upperSideBar {
+    display: flex;
+    flex-direction: column;
 }
 
 .list {
@@ -46,6 +60,10 @@
     font-weight: 800;
     border-color: var(--glay-color);
     cursor: pointer;
+    text-align: left;
+    display: grid;
+    text-wrap: nowrap;
+    grid-template-columns: 20% 50%;
 }
 
 .projectBtn:hover,
@@ -61,20 +79,21 @@
 }
 
 .button {
-    color: yellow;
+    color: ghostwhite;
     background-color: var(--glay-color);
     cursor: pointer;
     margin-bottom: .5rem;
-    padding: 5px;
+    padding: .5rem;
+    border-color: transparent;
+    font-weight: 500;
+    font-size: medium;
 }
 
-.button:hover {
+.button:hover,
+.button:focus {
     background-color: black;
 }
 
-.focus {
-    background-color: black;
-}
 
 table {
     width: 80%;
@@ -82,12 +101,13 @@ table {
     background-color: var(--glay-color);
 }
 
-thead {
-    background-color: black;
-    color: yellow;
-}
-
 td {
     padding: 1rem;
     border: solid black;
+}
+
+
+thead {
+    background-color: black;
+    color: ghostwhite;
 }

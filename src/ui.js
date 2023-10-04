@@ -48,9 +48,10 @@ const UI = (() =>
     sideBar.appendChild(upperSide);
     sideBar.appendChild(lowerSide);
     // upperSide
-    const upperBody = document.createElement('ul');
+    const upperBody = document.createElement('div');
+    upperBody.classList.add('upperSideBar')
     // Inbox ..............................................................
-    const inbox = document.createElement('li');
+    const inbox = document.createElement('button');
     inbox.classList.add('button');
     inbox.innerText = `Inbox`;
     inbox.addEventListener('click', () =>
@@ -84,7 +85,7 @@ const UI = (() =>
         mainPage.lastChild.replaceWith(inboxProjectList);
     });
     // Today .............................................................
-    const today = document.createElement('li');
+    const today = document.createElement('button');
     today.classList.add('button');
     today.innerText = `Today`;
     today.addEventListener('click', () =>
@@ -118,7 +119,7 @@ const UI = (() =>
         }
     });
     // within a week 
-    const next7day = document.createElement('li');
+    const next7day = document.createElement('button');
     next7day.classList.add('button');
     next7day.innerText = `Next 7 days`;
     next7day.addEventListener('click', () =>
@@ -152,7 +153,7 @@ const UI = (() =>
         }
     });
 
-    const important = document.createElement('li');
+    const important = document.createElement('button');
     important.classList.add('button');
     important.innerText = `Important`;
     important.addEventListener('click', () =>
@@ -186,7 +187,7 @@ const UI = (() =>
         }
     });
 
-    const completed = document.createElement('li');
+    const completed = document.createElement('button');
     completed.classList.add('button');
     completed.innerText = `Completed`;
     completed.addEventListener('click', () =>
@@ -236,7 +237,7 @@ const UI = (() =>
     for (let project of Projects.projectsList)
     {
         let proj = document.createElement('button');
-        proj.innerHTML = `<i class="fa-solid ${ project.icon }"></i>  ${ project.title } `
+        proj.innerHTML = `<i class="fa-solid icon ${ project.icon }"></i>  ${ project.title } `
         proj.style.color = `${ project.color }`;
         proj.classList.add('projectBtn');
         projects.appendChild(proj);
