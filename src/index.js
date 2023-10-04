@@ -3,7 +3,7 @@ import Tasks from "./tasks";
 import Projects from "./projects";
 import UI from "./ui";
 
-Projects.createProject('Debugging', 'fa-calendar-days', 'purple');
+Projects.createProject('Debugging', 'fa-calendar-days', 'cyan');
 
 
 Tasks.createTask(0, 'wow', 'high', '12', false); // will go to default project

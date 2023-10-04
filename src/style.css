@@ -8,8 +8,9 @@
     scroll-behavior: smooth;
 
 }
-:root{
-    --glay-color:rgba(0, 0, 0, 0.368);
+
+:root {
+    --glay-color: rgba(0, 0, 0, 0.368);
 }
 
 .todoRoot {
@@ -23,7 +24,7 @@
     justify-content: space-between;
     flex-direction: column;
     padding: 1rem;
-    background-color: blue;
+    background-color: rgb(68, 68, 246);
     overflow: hidden;
 }
 
@@ -32,6 +33,24 @@
     height: 80%;
     padding-bottom: 2rem;
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.projectBtn {
+    background-color: transparent;
+    margin: 1px 1rem;
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: medium;
+    font-weight: 800;
+    border-color: var(--glay-color);
+    cursor: pointer;
+}
+
+.projectBtn:hover,
+.projectBtn:focus {
+    background-color: var(--glay-color);
 }
 
 .mainpage {
@@ -43,7 +62,7 @@
 
 .button {
     color: yellow;
-    background-color:var(--glay-color);
+    background-color: var(--glay-color);
     cursor: pointer;
     margin-bottom: .5rem;
     padding: 5px;

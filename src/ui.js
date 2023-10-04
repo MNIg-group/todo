@@ -235,9 +235,10 @@ const UI = (() =>
     projects.classList.add('list');
     for (let project of Projects.projectsList)
     {
-        let proj = document.createElement('div');
+        let proj = document.createElement('button');
         proj.innerHTML = `<i class="fa-solid ${ project.icon }"></i>  ${ project.title } `
         proj.style.color = `${ project.color }`;
+        proj.classList.add('projectBtn');
         projects.appendChild(proj);
     }
 
