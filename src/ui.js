@@ -27,7 +27,7 @@ const UI = (() =>
     ProjectTitle_input.id = `Project_title`;
     ProjectTitle_input.name = `Project_title`;
     ProjectTitle_input.autocomplete = `off`;
-    ProjectTitle_input.placeholder = `e.g. Debuging`;
+    ProjectTitle_input.placeholder = `e.g. Debugging`;
 
     ProjectTitle.appendChild(ProjectTitle_label);
     ProjectTitle.appendChild(ProjectTitle_input);
@@ -60,14 +60,24 @@ const UI = (() =>
         iconImg.style.cursor = `pointer`;
         radio.addEventListener('change', () =>
         {
-            if (radio.checked)
+
+            let group_of_icons = radio.parentElement.parentElement;
+
+            for (label of group_of_icons)
             {
-                radio.nextSibling.classList.toggle('radio-focus');
-            };
+
+                label.nextSibling.classList.remove('radio-focus');
+                if (label.checked)
+                {
+                    label.nextSibling.classList.add('radio-focus');
+                }
+            }
+
         })
         label.appendChild(radio);
         label.appendChild(iconImg);
         icon_group.appendChild(label);
+
     }
 
 
@@ -105,8 +115,9 @@ const UI = (() =>
     ProjectHeader.classList.add('form-header');
 
     const ProjectSubmit = document.createElement('div');
-    const submitBtn = document.createElement('input');
+    const submitBtn = document.createElement('button');
     submitBtn.type = `submit`;
+    submitBtn.innerText = `Submit`;
     ProjectSubmit.appendChild(submitBtn);
     submitBtn.addEventListener('submit', (e) =>
     {

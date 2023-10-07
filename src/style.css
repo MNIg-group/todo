@@ -205,6 +205,7 @@ input[type="radio"] {
     cursor: pointer;
 }
 
+
 input[type="color"] {
     cursor: pointer;
 }
@@ -217,10 +218,10 @@ input[type="text"] {
 }
 
 .radio-focus {
-    color: blue;
+    color: var(--secondary-color);
 }
 
-input[type="submit"] {
+button[type="submit"] {
     cursor: pointer;
     border-radius: 6px;
     border-color: transparent;
@@ -231,11 +232,12 @@ input[type="submit"] {
     background-color: var(--glay-color);
 }
 
-input[type="submit"]:hover,
-input[type="submit"]:active {
+button[type="submit"]:hover,
+button[type="submit"]:active {
     background-color: var(--black-color);
 }
 
 .hidden {
     top: -80%;
+    visibility: hidden;
 }
