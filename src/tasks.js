@@ -20,8 +20,6 @@ const Tasks = (() =>
         const newTask = new Task(title, priority, time, done);
         Projects.projectsList[ projectIndex ].tasks.push(newTask);
         localStorage.setItem('projects', JSON.stringify(Projects.projectsList));
-
-        // console.log(Projects.projectsList);//////////////////////////////Debug
     }
 
 
@@ -47,7 +45,7 @@ const Tasks = (() =>
     let inboxList = [];
     function listofTask ()
     {
-        if (localStorage.getItem('inbox') === null)
+        if (localStorage.getItem('inbox') == null)
         {
             for (let x = 0; x < Projects.projectsList.length; x++)
             {

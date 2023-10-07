@@ -11,6 +11,118 @@ import '@fortawesome/fontawesome-free/js/brands'
 
 const UI = (() =>
 {
+    // Important forms ------------------------------------------------------
+    //   Add New Project +++++++++++++++++++++++++++++++++++++++++++++++++++++
+    const AddProject = document.createElement('form');
+    AddProject.classList.add('form');
+    AddProject.id = `ProjectForm`;
+
+    const ProjectTitle = document.createElement('div');
+    const ProjectTitle_label = document.createElement('label');
+    ProjectTitle_label.for = `Project_title`;
+    ProjectTitle_label.innerText = `Project Title`;
+    ProjectTitle_label.classList.add('head');
+    const ProjectTitle_input = document.createElement('input');
+    ProjectTitle_input.type = `text`;
+    ProjectTitle_input.id = `Project_title`;
+    ProjectTitle_input.name = `Project_title`;
+    ProjectTitle_input.autocomplete = `off`;
+    ProjectTitle_input.placeholder = `e.g. Debuging`;
+
+    ProjectTitle.appendChild(ProjectTitle_label);
+    ProjectTitle.appendChild(ProjectTitle_input);
+
+    const ProjectIcon = document.createElement('div');
+    ProjectIcon.classList.add('project-icons');
+    const ProjectIcon_head = document.createElement('label');
+    ProjectIcon_head.innerText = `Project Icon`;
+    ProjectIcon_head.classList.add('head');
+
+    let icon_group = document.createElement('form');
+    icon_group.classList.add('icon-group');
+
+    let ProjectIcons = [ "fa-home", "fa-calendar-days", "fa-calendar-day", "fa-car", "fa-building", "fa-graduation-cap" ];
+    for (let icon of ProjectIcons)
+    {
+        let radio = document.createElement('input');
+        radio.value = `${ icon }`;
+        radio.type = `radio`;
+        radio.id = `${ icon }`;
+        radio.name = `icon`;
+
+        let label = document.createElement('label');
+        label.for = `${ icon }`;
+        let iconImg = document.createElement('i');
+        iconImg.classList.add('fa');
+        iconImg.classList.add('fa-solid');
+        iconImg.classList.add(`${ icon }`);
+        iconImg.ariaHidden = `true`;
+        iconImg.style.cursor = `pointer`;
+        radio.addEventListener('change', () =>
+        {
+            if (radio.checked)
+            {
+                radio.nextSibling.classList.toggle('radio-focus');
+            };
+        })
+        label.appendChild(radio);
+        label.appendChild(iconImg);
+        icon_group.appendChild(label);
+    }
+
+
+    ProjectIcon.appendChild(ProjectIcon_head);
+    ProjectIcon.appendChild(icon_group);
+
+    const ProjectColor = document.createElement('div');
+    const ProjectColor_head = document.createElement("label");
+    ProjectColor_head.innerText = `Project Color`;
+    ProjectColor_head.for = `proColor`;
+    const Color = document.createElement('input');
+    Color.type = `color`;
+    Color.id = `proColor`;
+    Color.name = 'ProjectColor';
+    Color.value = `#00ffff`;
+    Color.style.outline = `none`;
+    Color.style.border = `none`;
+
+    ProjectColor.appendChild(ProjectColor_head);
+    ProjectColor.appendChild(Color);
+
+
+    const ProjectHeader = document.createElement('h1');
+    ProjectHeader.innerText = `Add New Project`;
+    const closespan = document.createElement('span');
+    const closeBtn = document.createElement('button');
+    closeBtn.innerHTML = `<i class="fa-solid fa-plus"></i>`;
+    closeBtn.addEventListener('click', (e) =>
+    {
+        e.preventDefault();
+        AddProject.classList.toggle('hidden');
+    })
+    closespan.appendChild(closeBtn);
+    ProjectHeader.appendChild(closespan);
+    ProjectHeader.classList.add('form-header');
+
+    const ProjectSubmit = document.createElement('div');
+    const submitBtn = document.createElement('input');
+    submitBtn.type = `submit`;
+    ProjectSubmit.appendChild(submitBtn);
+    submitBtn.addEventListener('submit', (e) =>
+    {
+        e.preventDefault();
+        let form = document.getElementById('ProjectForm');
+        alert("form data:", form);
+    })
+
+    AddProject.appendChild(ProjectHeader);
+    AddProject.appendChild(ProjectTitle);
+    AddProject.appendChild(ProjectIcon);
+    AddProject.appendChild(ProjectColor);
+    AddProject.appendChild(ProjectSubmit);
+    AddProject.classList.toggle('hidden');
+
+    // -------------------------------------------===================----------------------------
 
     const inboxProjectList = document.createElement('table');
     const inboxHeader = document.createElement('thead');
@@ -230,8 +342,19 @@ const UI = (() =>
 
 
     // lowerSide
-    const header = document.createElement('h1');
-    header.innerText = `Projects`;
+    const header = document.createElement('div');
+    const head = document.createElement('h1');
+    head.innerText = `Projects`;
+    const hButton = document.createElement('button');
+    hButton.innerText = `Add Project`;
+    header.appendChild(head);
+    header.appendChild(hButton);
+
+    header.classList.add('flex');
+    hButton.addEventListener('click', () =>
+    {
+        AddProject.classList.toggle('hidden');
+    })
     const projects = document.createElement('div');
     projects.classList.add('list');
     for (let project of Projects.projectsList)
@@ -263,6 +386,7 @@ const UI = (() =>
 
     root.appendChild(sideBar);
     root.appendChild(mainPage);
+    root.appendChild(AddProject);
     document.body.appendChild(root);
 
 })();
