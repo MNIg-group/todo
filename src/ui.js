@@ -1,6 +1,7 @@
 import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
+import Handler from './formHandler';
 
 // fontawesome
 import '@fortawesome/fontawesome-free/js/fontawesome'
@@ -15,6 +16,7 @@ const UI = (() =>
     //   Add New Project +++++++++++++++++++++++++++++++++++++++++++++++++++++
     const AddProject = document.createElement('form');
     AddProject.classList.add('form');
+    AddProject.action = "";
     AddProject.id = `ProjectForm`;
 
     const ProjectTitle = document.createElement('div');
@@ -119,11 +121,24 @@ const UI = (() =>
     submitBtn.type = `submit`;
     submitBtn.innerText = `Submit`;
     ProjectSubmit.appendChild(submitBtn);
-    submitBtn.addEventListener('submit', (e) =>
+    submitBtn.addEventListener('click', () =>
     {
-        e.preventDefault();
-        let form = document.getElementById('ProjectForm');
-        alert("form data:", form);
+
+        let title = document.getElementById('Project_title').value;
+
+        let selectedIcon;
+        let icon = document.getElementsByName('icon');
+        for (let i = 0; i < icon.length; i++)
+        {
+            if (icon[ i ].checked)
+            {
+                selectedIcon = icon[ i ].value;
+            }
+        }
+
+        let color = document.getElementById('proColor').value;
+
+        Handler.newProject(title, selectedIcon, color);
     })
 
     AddProject.appendChild(ProjectHeader);
