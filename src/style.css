@@ -241,3 +241,20 @@ button[type="submit"]:active {
     top: -80%;
     visibility: hidden;
 }
+
+.addTask {
+    width: 80%;
+    margin: 2rem;
+}
+
+.addTask>button {
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    margin: auto;
+    font-weight: bold;
+    font-size: medium;
+    margin-right: 0;
+    border-radius: 6px;
+}

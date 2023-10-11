@@ -148,6 +148,10 @@ const UI = (() =>
     AddProject.appendChild(ProjectSubmit);
     AddProject.classList.toggle('hidden');
 
+
+    //Add New Task into the Project ---------------------------------------------
+
+
     // -------------------------------------------===================----------------------------
 
     const inboxProjectList = document.createElement('table');
@@ -174,6 +178,11 @@ const UI = (() =>
     const importantHeader = document.createElement('thead');
     importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     importantList.appendChild(importantHeader);
+
+    const project_s_task_list = document.createElement('table');
+    const Project_s_task_header = document.createElement('thead');
+    Project_s_task_header.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
+    project_s_task_list.appendChild(Project_s_task_header);
 
     const root = document.createElement('div');
     root.classList.add('todoRoot');
@@ -389,6 +398,48 @@ const UI = (() =>
         proj.innerHTML = `<i class="fa-solid icon ${ project.icon }"></i>  ${ project.title } `
         proj.style.color = `${ project.color }`;
         proj.classList.add('projectBtn');
+
+        //When the project is clicked
+        proj.addEventListener('click', () =>
+        {
+            mainHeader.innerText = `${ project.title }`;
+            mainPage.lastChild.replaceWith(project_s_task_list);
+            let tasks_of_project = [];
+
+            for (let i = 0; i < Projects.projectsList.length; i++)
+            {
+                if (Projects.projectsList[ i ].title == mainHeader.innerText)
+                {
+                    for (let task of Projects.projectsList[ i ].tasks)
+                    {
+                        tasks_of_project.push(task);
+                    }
+
+                }
+            }
+
+            try
+            {
+                let tableRows = project_s_task_list.rows.length;
+                let i = 1;
+                while (tableRows > i)
+                {
+                    project_s_task_list.deleteRow(i);
+                }
+            } catch (error)
+            {
+                console.error("Enough Deletion");
+            }
+
+            for (let box of tasks_of_project)
+            {
+                let list = document.createElement('tr');
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
+                project_s_task_list.appendChild(list);
+            }
+
+        })
+
         projects.appendChild(proj);
     }
 
@@ -404,9 +455,15 @@ const UI = (() =>
 
     mainHeader.innerText = `Inbox`;
 
+    const newtask = document.createElement('div');
+    const addTaskBtn = document.createElement('button');
+    addTaskBtn.innerHTML = `<i class="fa-solid fa-plus"></i> <p>Add Task</p>`;
+    newtask.classList.add('addTask');
+    newtask.appendChild(addTaskBtn);
 
 
     mainPage.appendChild(mainHeader);
+    mainPage.appendChild(newtask);
     mainPage.appendChild(inboxProjectList);
 
 
