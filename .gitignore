@@ -1,7 +1,11 @@
-node_modules
-.gitignore
-./src/*
-src/*
-./src/*
+/src/formHandler.js
+/src/index.js
+/src/project.js
+/src/style.css
+/src/tasks.js
+/src/ui.js
+.src/*
 ./node_modules/*
-node_modules/*
+node_modules
+src
+.gitignore
