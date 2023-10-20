@@ -47,6 +47,7 @@ const Tasks = (() =>
     let inboxList = [];
     function listofTask ()
     {
+
         try
         {
 
@@ -57,6 +58,7 @@ const Tasks = (() =>
                     inboxList.push(task);
                 }
             }
+            localStorage.removeItem('inbox');
             localStorage.setItem('inbox', JSON.stringify(inboxList));
 
         } catch (error)
