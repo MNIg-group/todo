@@ -2,6 +2,7 @@ import './style.css';
 import Projects from './projects';
 import Tasks from './tasks';
 import Handler from './formHandler';
+import * as Util from './util';
 
 // fontawesome
 import '@fortawesome/fontawesome-free/js/fontawesome'
@@ -13,40 +14,15 @@ import '@fortawesome/fontawesome-free/js/brands'
 const UI = (() =>
 {
     //When The Page reload
-
     window.onload = () =>
     {
 
         mainHeader.innerText = `Inbox`;
-        mainPage.lastChild.replaceWith(inboxProjectList);
-
-
-        let list = Tasks.listofTask();
-        // Avoid Duplication
-        try
-        {
-            let tableRows = inboxProjectList.rows.length;
-            let i = 1;
-            while (tableRows > i)
-            {
-                inboxProjectList.deleteRow(i);
-            }
-
-        } catch (error)
-        {
-            console.error("Enough Deletion!");
-        }
-        for (let box of list)
-        {
-            let list = document.createElement('tr');
-            list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-            inboxProjectList.appendChild(list);
-        }
-
-        mainPage.lastChild.replaceWith(inboxProjectList);
+        mainPage.removeChild(mainPage.lastChild);
+        mainPage.appendChild(inboxProjectList);
+        Util.deleteTable(inboxProjectList);
         console.info("The webpage was fully loaded!");
     }
-
     // Important forms ------------------------------------------------------
     //   Add New Project +++++++++++++++++++++++++++++++++++++++++++++++++++++
     const AddProject = document.createElement('form');
@@ -117,7 +93,6 @@ const UI = (() =>
 
     }
 
-
     ProjectIcon.appendChild(ProjectIcon_head);
     ProjectIcon.appendChild(icon_group);
 
@@ -135,7 +110,6 @@ const UI = (() =>
 
     ProjectColor.appendChild(ProjectColor_head);
     ProjectColor.appendChild(Color);
-
 
     const ProjectHeader = document.createElement('h1');
     ProjectHeader.innerText = `Add New Project`;
@@ -182,7 +156,6 @@ const UI = (() =>
     AddProject.appendChild(ProjectColor);
     AddProject.appendChild(ProjectSubmit);
     AddProject.classList.toggle('hidden');
-
 
     //Add New Task into the Project ---------------------------------------------
 
@@ -301,7 +274,6 @@ const UI = (() =>
         }
         else
         {
-
             let title = document.getElementById('Task_title').value;
             let priority = document.getElementById('taskPriority').value;
             let time = document.getElementById('taskTime').value;
@@ -334,40 +306,38 @@ const UI = (() =>
     AddTask.appendChild(TaskSubmit);
     AddTask.classList.toggle('hidden');
 
-
     const bed_of_form = document.createElement('div');
     bed_of_form.classList.add('bed-of-forms');
     bed_of_form.classList.toggle('hidden');
     // -------------------------------------------===================----------------------------
-
     const inboxProjectList = document.createElement('table');
     const inboxHeader = document.createElement('thead');
-    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     inboxProjectList.appendChild(inboxHeader);
 
     const todayList = document.createElement('table');
     const todayHeader = document.createElement('thead');
-    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     todayList.appendChild(todayHeader);
 
     const weekList = document.createElement('table');
     const weekHeader = document.createElement('thead');
-    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     weekList.appendChild(weekHeader);
 
     const completedList = document.createElement('table');
     const completedHeader = document.createElement('thead');
-    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     completedList.appendChild(completedHeader);
 
     const importantList = document.createElement('table');
     const importantHeader = document.createElement('thead');
-    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     importantList.appendChild(importantHeader);
 
     const project_s_task_list = document.createElement('table');
     const Project_s_task_header = document.createElement('thead');
-    Project_s_task_header.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Edit</td><td>Delete</td>`;
+    Project_s_task_header.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
     project_s_task_list.appendChild(Project_s_task_header);
 
     const root = document.createElement('div');
@@ -389,33 +359,28 @@ const UI = (() =>
     inbox.innerText = `Inbox`;
     inbox.addEventListener('click', () =>
     {
-        mainHeader.innerText = `Inbox`;
-        mainPage.lastChild.replaceWith(inboxProjectList);
+        mainPage.removeChild(mainPage.lastChild)
+        mainPage.appendChild(inboxProjectList);
 
-
-        let list = Tasks.listofTask();
-        // Avoid Duplication
         try
         {
+
+
+            // Avoid Duplication
+
             let tableRows = inboxProjectList.rows.length;
-            let i = 1;
-            while (tableRows > i)
+            while (tableRows > 1)
             {
-                inboxProjectList.deleteRow(i);
+                inboxProjectList.deleteRow(tableRows);
+                tableRows--;
             }
 
-        } catch (error)
-        {
+            Util.deleteTable(inboxProjectList);
+
+        } catch {
             console.error("Enough Deletion!");
         }
-        for (let box of list)
-        {
-            let list = document.createElement('tr');
-            list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-            inboxProjectList.appendChild(list);
-        }
-
-        mainPage.lastChild.replaceWith(inboxProjectList);
+        mainHeader.innerText = `Inbox`;
     });
     // Today .............................................................
     const today = document.createElement('button');
@@ -423,32 +388,29 @@ const UI = (() =>
     today.innerText = `Today`;
     today.addEventListener('click', () =>
     {
+
         mainHeader.innerText = `Today`;
-        mainPage.lastChild.replaceWith(todayList);
-        let list = Tasks.listofTask();
-        // Avoid Duplication
+
         try
         {
+
+            // Avoid Duplication
+
             let tableRows = todayList.rows.length;
-            let i = 1;
-            while (tableRows > i)
+            while (tableRows > 1)
             {
-                todayList.deleteRow(i);
+                todayList.deleteRow(tableRows);
+                tableRows--;
             }
 
-        } catch (error)
-        {
+            Util.deleteTable(todayList);
+
+        } catch {
             console.error("Enough Deletion!");
         }
 
-        for (let box of list)
-        {
-            if (box.time <= 24)
-            {
-                let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-            }
-        }
+        mainPage.removeChild(mainPage.lastChild)
+        mainPage.appendChild(todayList);
     });
     // within a week 
     const next7day = document.createElement('button');
@@ -456,33 +418,28 @@ const UI = (() =>
     next7day.innerText = `Next 7 days`;
     next7day.addEventListener('click', () =>
     {
+
         mainHeader.innerText = `Next 7 days`;
-        mainPage.lastChild.replaceWith(weekList);
-        let list = Tasks.listofTask();
-        // Avoid Duplication
+        let type = 'week';
         try
         {
-            let tableRows = weekList.rows.length;
-            let i = 1;
-            while (tableRows > i)
-            {
-                weekList.deleteRow(i);
-            }
 
-        } catch (error)
-        {
+            // Avoid Duplication
+            let tableRows = weekList.rows.length;
+            while (tableRows > 1)
+            {
+                weekList.deleteRow(tableRows);
+                tableRows--;
+            }
+            Util.deleteTable(weekList, type);
+
+        } catch {
             console.error("Enough Deletion!");
         }
 
-        for (let box of list)
-        {
-            if (box.time <= 168)
-            {
-                let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-                weekList.appendChild(list);
-            }
-        }
+        mainPage.removeChild(mainPage.lastChild)
+        mainPage.appendChild(weekList);
+
     });
 
     const important = document.createElement('button');
@@ -490,39 +447,34 @@ const UI = (() =>
     important.innerText = `Important`;
     important.addEventListener('click', () =>
     {
+
+        console.log(mainPage.lastChild);
         mainHeader.innerText = `Important`;
-        mainPage.lastChild.replaceWith(importantList);
-        let list = Tasks.listofTask();
-        // Avoid Duplication
+
+        mainPage.removeChild(mainPage.lastChild)
+        mainPage.appendChild(importantList);
+        let type = 'important';
         try
         {
+            // Avoid Duplication
             let tableRows = importantList.rows.length;
-            let i = 1;
-            while (tableRows > i)
+            while (tableRows > 1)
             {
-                importantList.deleteRow(i);
+                importantList.deleteRow(tableRows);
+                tableRows--;
             }
 
-        } catch (error)
-        {
+            Util.deleteTable(importantList, type);
+
+        } catch {
             console.error("Enough Deletion!");
         }
 
-        for (let box of list)
-        {
-            if (box.priority == 'high' || box.priority == 'High')
-            {
-                let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-                importantList.appendChild(list);
-            }
-        }
         let deleteBtn = document.getElementsByClassName("delete-button");
         let editBtn = document.getElementsByClassName("edit-button");
 
         let editArray = [ ...editBtn ];
         let deleteArray = [ ...deleteBtn ];
-
         //Edit CRUD Operation
         for (let button of editArray)
         {
@@ -535,7 +487,6 @@ const UI = (() =>
 
             })
         }
-
         //Delete CRUD Operation
         for (let button of deleteArray)
         {
@@ -544,7 +495,6 @@ const UI = (() =>
                 console.log("Deleted!");
             })
         }
-
     });
 
     const completed = document.createElement('button');
@@ -552,32 +502,29 @@ const UI = (() =>
     completed.innerText = `Completed`;
     completed.addEventListener('click', () =>
     {
+
+        console.log(mainPage.lastChild);
         mainHeader.innerText = `Completed`;
-        mainPage.lastChild.replaceWith(completedList);
-        let list = Tasks.listofTask();
-        // Avoid Duplication
+
+        mainPage.removeChild(mainPage.lastChild)
+        mainPage.appendChild(completedList);
+        let type = 'completed';
+
         try
         {
+            // Avoid Duplication
+
             let tableRows = completedList.rows.length;
-            let i = 1;
-            while (tableRows > i)
+            while (tableRows > 1)
             {
-                completedList.deleteRow(i);
+                completedList.deleteRow(tableRows);
+                tableRows--;
             }
 
-        } catch (error)
-        {
+            Util.deleteTable(completedList, type);
+
+        } catch {
             console.error("Enough Deletion!");
-        }
-
-        for (let box of list)
-        {
-            if (box.done == true)
-            {
-                let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button></td>`;
-                completedList.appendChild(list);
-            }
         }
     });
 
@@ -587,7 +534,6 @@ const UI = (() =>
     upperBody.appendChild(important);
     upperBody.appendChild(completed);
     upperSide.appendChild(upperBody);
-
 
     // lowerSide
     const header = document.createElement('div');
@@ -617,7 +563,8 @@ const UI = (() =>
         proj.addEventListener('click', () =>
         {
             mainHeader.innerText = `${ project.title }`;
-            mainPage.lastChild.replaceWith(project_s_task_list);
+            mainPage.removeChild(mainPage.lastChild);
+            mainPage.appendChild(project_s_task_list);
             let tasks_of_project = [];
 
             for (let i = 0; i < Projects.projectsList.length; i++)
@@ -631,7 +578,6 @@ const UI = (() =>
 
                 }
             }
-
             try
             {
                 let tableRows = project_s_task_list.rows.length;
@@ -644,11 +590,10 @@ const UI = (() =>
             {
                 console.error("Enough Deletion");
             }
-
             for (let box of tasks_of_project)
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="edit-button"><i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button></td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
                 project_s_task_list.appendChild(list);
             }
         })
@@ -679,11 +624,9 @@ const UI = (() =>
     newtask.classList.add('addTask');
     newtask.appendChild(addTaskBtn);
 
-
-    mainPage.appendChild(mainHeader);
     mainPage.appendChild(newtask);
+    mainPage.appendChild(mainHeader);
     mainPage.appendChild(inboxProjectList);
-
 
     root.appendChild(sideBar);
     root.appendChild(mainPage);
@@ -691,8 +634,6 @@ const UI = (() =>
     root.appendChild(AddTask);
     root.appendChild(bed_of_form);
     document.body.appendChild(root);
-
 })();
-
 
 export default UI;
