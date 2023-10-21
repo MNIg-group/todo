@@ -25,32 +25,12 @@ const Tasks = (() =>
     }
 
 
-
-    function editTask (projectIndex, taskIndex, title, priority, time)
-    {
-        Projects.projectsList[ projectIndex ].tasks[ taskIndex ].title = title;
-        Projects.projectsList[ projectIndex ].tasks[ taskIndex ].priority = priority;
-        Projects.projectsList[ projectIndex ].tasks[ taskIndex ].time = time;
-        // Projects.projectsList[ projectIndex ].tasks[ taskIndex ].done = done;
-
-
-        localStorage.removeItem('projects');
-        localStorage.setItem('projects', JSON.stringify(Projects.projectsList));
-
-    }
-    function removeTask ()
-    {
-        console.log("Task have been removed");
-    }
-
     //  Gain list of tasks from local storage
     let inboxList = [];
     function listofTask ()
     {
-
         try
         {
-
             for (let x = 0; x < Projects.projectsList.length; x++)
             {
                 for (let task of Projects.projectsList[ x ].tasks)
@@ -74,8 +54,6 @@ const Tasks = (() =>
 
     return {
         createTask,
-        editTask,
-        removeTask,
         listofTask,
     };
 })()

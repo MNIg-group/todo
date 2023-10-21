@@ -16,11 +16,12 @@ const UI = (() =>
     //When The Page reload
     window.onload = () =>
     {
+        localStorage.removeItem('Header');
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
 
-        mainHeader.innerText = `Inbox`;
-        mainPage.removeChild(mainPage.lastChild);
-        mainPage.appendChild(inboxProjectList);
-        Util.deleteTable(inboxProjectList);
+            mainPage.removeChild(mainPage.lastChild);
+        }
         console.info("The webpage was fully loaded!");
     }
     // Important forms ------------------------------------------------------
@@ -73,7 +74,6 @@ const UI = (() =>
         iconImg.style.cursor = `pointer`;
         radio.addEventListener('change', () =>
         {
-
             let group_of_icons = radio.parentElement.parentElement;
 
             for (label of group_of_icons)
@@ -85,12 +85,10 @@ const UI = (() =>
                     label.nextSibling.classList.add('radio-focus');
                 }
             }
-
         })
         label.appendChild(radio);
         label.appendChild(iconImg);
         icon_group.appendChild(label);
-
     }
 
     ProjectIcon.appendChild(ProjectIcon_head);
@@ -240,63 +238,27 @@ const UI = (() =>
     TaskSubmit.appendChild(TaskSubmitBtn);
     TaskSubmitBtn.addEventListener('click', () =>
     {
-        let isTasktoEdit = localStorage.getItem('isEditTask');
-        if (isTasktoEdit == "yes")
+        let title = document.getElementById('Task_title').value;
+        let priority = document.getElementById('taskPriority').value;
+        let time = document.getElementById('taskTime').value;
+
+        let listOfProjectsByNames = [];
+        let index;
+
+        for (let project of Projects.projectsList)
         {
-
-            let title = document.getElementById('Task_title').value;
-            let priority = document.getElementById('taskPriority').value;
-            let time = document.getElementById('taskTime').value;
-
-            let listOfProjectsByNames = [];
-            let project_index;
-
-            for (let project of Projects.projectsList)
-            {
-                listOfProjectsByNames.push(project.title);
-            }
-            if (listOfProjectsByNames.includes(mainHeader.innerText))
-            {
-                project_index = listOfProjectsByNames.indexOf(`${ mainHeader.innerText }`);
-            }
-            else
-            {
-                project_index = 0;
-            }
-
-            let taskIndex = editArray.indexOf(button);
-            Handler.editTask(project_index, taskIndex, title, priority, time);
-
-            localStorage.removeItem("isEditTask");
-            localStorage.setItem('isEditTask', 'no');
-            document.getElementById('TaskForm').reset();
-
+            listOfProjectsByNames.push(project.title);
+        }
+        if (listOfProjectsByNames.includes(mainHeader.innerText))
+        {
+            index = listOfProjectsByNames.indexOf(`${ mainHeader.innerText }`);
         }
         else
         {
-            let title = document.getElementById('Task_title').value;
-            let priority = document.getElementById('taskPriority').value;
-            let time = document.getElementById('taskTime').value;
-
-            let listOfProjectsByNames = [];
-            let index;
-
-            for (let project of Projects.projectsList)
-            {
-                listOfProjectsByNames.push(project.title);
-            }
-            if (listOfProjectsByNames.includes(mainHeader.innerText))
-            {
-                index = listOfProjectsByNames.indexOf(`${ mainHeader.innerText }`);
-            }
-            else
-            {
-                index = 0;
-            }
-
-            Tasks.createTask(index, title, priority, time);
-            document.getElementById('TaskForm').reset();
+            index = 0;
         }
+        Tasks.createTask(index, title, priority, time);
+        document.getElementById('TaskForm').reset();
     })
 
     AddTask.appendChild(TaskHeader);
@@ -312,27 +274,27 @@ const UI = (() =>
     // -------------------------------------------===================----------------------------
     const inboxProjectList = document.createElement('table');
     const inboxHeader = document.createElement('thead');
-    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     inboxProjectList.appendChild(inboxHeader);
 
     const todayList = document.createElement('table');
     const todayHeader = document.createElement('thead');
-    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     todayList.appendChild(todayHeader);
 
     const weekList = document.createElement('table');
     const weekHeader = document.createElement('thead');
-    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     weekList.appendChild(weekHeader);
 
     const completedList = document.createElement('table');
     const completedHeader = document.createElement('thead');
-    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     completedList.appendChild(completedHeader);
 
     const importantList = document.createElement('table');
     const importantHeader = document.createElement('thead');
-    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     importantList.appendChild(importantHeader);
 
     const project_s_task_list = document.createElement('table');
@@ -359,14 +321,19 @@ const UI = (() =>
     inbox.innerText = `Inbox`;
     inbox.addEventListener('click', () =>
     {
-        mainPage.removeChild(mainPage.lastChild)
-        mainPage.appendChild(inboxProjectList);
-
+        localStorage.setItem('Header', 'Inbox');
+        mainHeader.innerText = 'Inbox';
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
+            mainPage.removeChild(mainPage.lastChild)
+            mainPage.appendChild(inboxProjectList);
+        } else
+        {
+            mainPage.appendChild(inboxProjectList);
+        }
         try
         {
 
-
-            // Avoid Duplication
 
             let tableRows = inboxProjectList.rows.length;
             while (tableRows > 1)
@@ -378,9 +345,9 @@ const UI = (() =>
             Util.deleteTable(inboxProjectList);
 
         } catch {
-            console.error("Enough Deletion!");
+            console.error("Full Deletion!");
         }
-        mainHeader.innerText = `Inbox`;
+
     });
     // Today .............................................................
     const today = document.createElement('button');
@@ -390,11 +357,19 @@ const UI = (() =>
     {
 
         mainHeader.innerText = `Today`;
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
+            mainPage.removeChild(mainPage.lastChild)
+            mainPage.appendChild(todayList);
+        }
+        else
+        {
+            mainPage.appendChild(todayList);
+        }
 
         try
         {
-
-            // Avoid Duplication
+            localStorage.setItem('Header', 'Today');
 
             let tableRows = todayList.rows.length;
             while (tableRows > 1)
@@ -406,11 +381,9 @@ const UI = (() =>
             Util.deleteTable(todayList);
 
         } catch {
-            console.error("Enough Deletion!");
+            console.error("Full Deletion!");
         }
 
-        mainPage.removeChild(mainPage.lastChild)
-        mainPage.appendChild(todayList);
     });
     // within a week 
     const next7day = document.createElement('button');
@@ -420,11 +393,18 @@ const UI = (() =>
     {
 
         mainHeader.innerText = `Next 7 days`;
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
+            mainPage.removeChild(mainPage.lastChild);
+            mainPage.appendChild(weekList);
+        } else
+        {
+            mainPage.appendChild(weekList);
+        }
         let type = 'week';
         try
         {
-
-            // Avoid Duplication
+            localStorage.setItem('Header', 'Next 7 days');
             let tableRows = weekList.rows.length;
             while (tableRows > 1)
             {
@@ -434,11 +414,8 @@ const UI = (() =>
             Util.deleteTable(weekList, type);
 
         } catch {
-            console.error("Enough Deletion!");
+            console.error("Full Deletion!");
         }
-
-        mainPage.removeChild(mainPage.lastChild)
-        mainPage.appendChild(weekList);
 
     });
 
@@ -447,16 +424,19 @@ const UI = (() =>
     important.innerText = `Important`;
     important.addEventListener('click', () =>
     {
-
-        console.log(mainPage.lastChild);
         mainHeader.innerText = `Important`;
-
-        mainPage.removeChild(mainPage.lastChild)
-        mainPage.appendChild(importantList);
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
+            mainPage.removeChild(mainPage.lastChild)
+            mainPage.appendChild(importantList);
+        } else
+        {
+            mainPage.appendChild(importantList);
+        }
         let type = 'important';
         try
         {
-            // Avoid Duplication
+            localStorage.setItem('Header', 'Important');
             let tableRows = importantList.rows.length;
             while (tableRows > 1)
             {
@@ -467,33 +447,7 @@ const UI = (() =>
             Util.deleteTable(importantList, type);
 
         } catch {
-            console.error("Enough Deletion!");
-        }
-
-        let deleteBtn = document.getElementsByClassName("delete-button");
-        let editBtn = document.getElementsByClassName("edit-button");
-
-        let editArray = [ ...editBtn ];
-        let deleteArray = [ ...deleteBtn ];
-        //Edit CRUD Operation
-        for (let button of editArray)
-        {
-            button.addEventListener('click', () =>
-            {
-                localStorage.setItem('isEditTask', 'yes');
-
-                AddTask.classList.toggle('hidden');
-                bed_of_form.classList.toggle('hidden');
-
-            })
-        }
-        //Delete CRUD Operation
-        for (let button of deleteArray)
-        {
-            button.addEventListener('click', () =>
-            {
-                console.log("Deleted!");
-            })
+            console.error("Full Deletion!");
         }
     });
 
@@ -502,17 +456,20 @@ const UI = (() =>
     completed.innerText = `Completed`;
     completed.addEventListener('click', () =>
     {
-
-        console.log(mainPage.lastChild);
         mainHeader.innerText = `Completed`;
-
-        mainPage.removeChild(mainPage.lastChild)
-        mainPage.appendChild(completedList);
+        if (mainPage.lastChild.tagName == 'TABLE')
+        {
+            mainPage.removeChild(mainPage.lastChild)
+            mainPage.appendChild(completedList);
+        } else
+        {
+            mainPage.appendChild(completedList);
+        }
         let type = 'completed';
 
         try
         {
-            // Avoid Duplication
+            localStorage.setItem('Header', 'Completed');
 
             let tableRows = completedList.rows.length;
             while (tableRows > 1)
@@ -524,7 +481,7 @@ const UI = (() =>
             Util.deleteTable(completedList, type);
 
         } catch {
-            console.error("Enough Deletion!");
+            console.error("Full Deletion!");
         }
     });
 
@@ -563,8 +520,16 @@ const UI = (() =>
         proj.addEventListener('click', () =>
         {
             mainHeader.innerText = `${ project.title }`;
-            mainPage.removeChild(mainPage.lastChild);
-            mainPage.appendChild(project_s_task_list);
+
+            localStorage.setItem('Header', `${ project.title }`);
+            if (mainPage.lastChild.tagName == 'TABLE')
+            {
+                mainPage.removeChild(mainPage.lastChild);
+                mainPage.appendChild(project_s_task_list);
+            } else
+            {
+                mainPage.appendChild(project_s_task_list);
+            }
             let tasks_of_project = [];
 
             for (let i = 0; i < Projects.projectsList.length; i++)
@@ -575,7 +540,6 @@ const UI = (() =>
                     {
                         tasks_of_project.push(task);
                     }
-
                 }
             }
             try
@@ -588,13 +552,88 @@ const UI = (() =>
                 }
             } catch (error)
             {
-                console.error("Enough Deletion");
+                console.error("Full Deletion");
             }
             for (let box of tasks_of_project)
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td><button class="edit-button" >${ box.done } </button >
+</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
                 project_s_task_list.appendChild(list);
+            }
+            //Delete a Task /==============================================
+            let deleteT = document.getElementsByClassName('delete-button');
+            for (let btn of deleteT)
+            {
+                btn.addEventListener('click', (e) =>
+                {
+                    e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement);
+
+
+                    let listss = JSON.parse(localStorage.getItem('projects'));
+                    for (let project of listss)
+                    {
+                        if (project.title == mainHeader.innerText)
+                        {
+                            for (let task of project.tasks)
+                            {
+                                if (task.title == e.target.parentElement.parentElement.firstChild.innerText)
+                                {
+                                    let index = project.tasks.indexOf(task);
+                                    project.tasks.splice(index, 1);
+                                }
+                            }
+                        }
+                    }
+                    Projects.projectsList = listss;
+                    localStorage.removeItem('projects');
+                    localStorage.setItem('projects', JSON.stringify(listss));
+
+                    console.warn("The Task has been removed");
+                })
+            }
+
+            //Edit a Task (change if is completed)
+            let completeT = document.getElementsByClassName('edit-button');
+            for (let btn of completeT)
+            {
+                btn.addEventListener('click', (e) =>
+                {
+
+                    let listss = JSON.parse(localStorage.getItem('projects'));
+                    try
+                    {
+                        for (let project of listss)
+                        {
+                            if (project.title == mainHeader.innerText)
+                            {
+                                for (let task of project.tasks)
+                                {
+                                    if (e.target.innerText.includes('false'))
+                                    {
+                                        let index = project.tasks.indexOf(task);
+                                        console.dir(project.tasks[ index ]);
+                                        e.target.innerText = `true `;
+                                        project.tasks[ index ].done = 'true';
+
+                                    } else
+                                    {
+                                        let index = project.tasks.indexOf(task);
+                                        console.dir(project.tasks[ index ]);
+                                        e.target.innerText = `false`;
+                                        project.tasks[ index ].done = 'false';
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err)
+                    {
+                        console.error(err);
+                    }
+                    Projects.projectsList = listss;
+                    localStorage.removeItem('projects');
+                    localStorage.setItem('projects', JSON.stringify(listss));
+                })
             }
         })
 
@@ -610,8 +649,6 @@ const UI = (() =>
     const mainPage = document.createElement('div');
     mainPage.classList.add('mainpage');
     const mainHeader = document.createElement('h1');
-
-    mainHeader.innerText = `Inbox`;
 
     const newtask = document.createElement('div');
     const addTaskBtn = document.createElement('button');

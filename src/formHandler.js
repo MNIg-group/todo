@@ -13,15 +13,11 @@ const Handler = (() =>
     {
         Tasks.createTask(projectIndex, title, priority, time);
     }
-    function editTask (project, task, title, priority, time)
-    {
-        Tasks.editTask(project, task, title, priority, time);
-    }
+
 
     return {
         newProject,
         createTask,
-        editTask,
     };
 })();
 
