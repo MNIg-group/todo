@@ -12,8 +12,7 @@ export function deleteTable (table, type)
             if (box.time <= 168)
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }<button class="edit-button" > <i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button >
-</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
                 table.appendChild(list);
             }
         }
@@ -25,8 +24,7 @@ export function deleteTable (table, type)
             if (box.priority == 'high' || box.priority == 'High')
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }<button class="edit-button" > <i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button >
-</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
                 table.appendChild(list);
             }
         }
@@ -38,8 +36,7 @@ export function deleteTable (table, type)
             if (box.done == true)
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }<button class="edit-button" > <i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button >
-</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
                 table.appendChild(list);
             }
         }
@@ -50,8 +47,7 @@ export function deleteTable (table, type)
         for (let box of list)
         {
             let list = document.createElement('tr');
-            list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }<button class="edit-button" > <i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button >
-</td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
+            list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }</td>`;
             table.appendChild(list);
         }
         return

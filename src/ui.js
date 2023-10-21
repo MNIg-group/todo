@@ -274,27 +274,27 @@ const UI = (() =>
     // -------------------------------------------===================----------------------------
     const inboxProjectList = document.createElement('table');
     const inboxHeader = document.createElement('thead');
-    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    inboxHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     inboxProjectList.appendChild(inboxHeader);
 
     const todayList = document.createElement('table');
     const todayHeader = document.createElement('thead');
-    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    todayHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     todayList.appendChild(todayHeader);
 
     const weekList = document.createElement('table');
     const weekHeader = document.createElement('thead');
-    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    weekHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     weekList.appendChild(weekHeader);
 
     const completedList = document.createElement('table');
     const completedHeader = document.createElement('thead');
-    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    completedHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     completedList.appendChild(completedHeader);
 
     const importantList = document.createElement('table');
     const importantHeader = document.createElement('thead');
-    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td><td>Delete</td>`;
+    importantHeader.innerHTML = `<td>Title</td> <td> Priority</td> <td>Time</td><td>Done</td>`;
     importantList.appendChild(importantHeader);
 
     const project_s_task_list = document.createElement('table');
@@ -557,7 +557,7 @@ const UI = (() =>
             for (let box of tasks_of_project)
             {
                 let list = document.createElement('tr');
-                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td>${ box.done }<button class="edit-button" > <i class="fa-solid fa-pen-to-square" style="color:yellow;"></i></button >
+                list.innerHTML = `<td>${ box.title }</td> <td>${ box.priority }</td> <td>${ box.time }</td> <td><button class="edit-button" >${ box.done } </button >
 </td><td><button class="delete-button"><i class="fa-solid fa-trash" style="color:purple;"></i></button> </td>`;
                 project_s_task_list.appendChild(list);
             }
@@ -569,10 +569,8 @@ const UI = (() =>
                 {
                     e.target.parentElement.parentElement.parentElement.removeChild(e.target.parentElement.parentElement);
 
-                    console.log(e.target.parentElement.parentElement.firstChild.innerText);
 
                     let listss = JSON.parse(localStorage.getItem('projects'));
-                    Projects.projectsList = listss;
                     for (let project of listss)
                     {
                         if (project.title == mainHeader.innerText)
@@ -587,6 +585,7 @@ const UI = (() =>
                             }
                         }
                     }
+                    Projects.projectsList = listss;
                     localStorage.removeItem('projects');
                     localStorage.setItem('projects', JSON.stringify(listss));
 
@@ -594,6 +593,48 @@ const UI = (() =>
                 })
             }
 
+            //Edit a Task (change if is completed)
+            let completeT = document.getElementsByClassName('edit-button');
+            for (let btn of completeT)
+            {
+                btn.addEventListener('click', (e) =>
+                {
+
+                    let listss = JSON.parse(localStorage.getItem('projects'));
+                    try
+                    {
+                        for (let project of listss)
+                        {
+                            if (project.title == mainHeader.innerText)
+                            {
+                                for (let task of project.tasks)
+                                {
+                                    if (e.target.innerText.includes('false'))
+                                    {
+                                        let index = project.tasks.indexOf(task);
+                                        console.dir(project.tasks[ index ]);
+                                        e.target.innerText = `true `;
+                                        project.tasks[ index ].done = 'true';
+
+                                    } else
+                                    {
+                                        let index = project.tasks.indexOf(task);
+                                        console.dir(project.tasks[ index ]);
+                                        e.target.innerText = `false`;
+                                        project.tasks[ index ].done = 'false';
+                                    }
+                                }
+                            }
+                        }
+                    } catch (err)
+                    {
+                        console.error(err);
+                    }
+                    Projects.projectsList = listss;
+                    localStorage.removeItem('projects');
+                    localStorage.setItem('projects', JSON.stringify(listss));
+                })
+            }
         })
 
         projects.appendChild(proj);
@@ -608,8 +649,6 @@ const UI = (() =>
     const mainPage = document.createElement('div');
     mainPage.classList.add('mainpage');
     const mainHeader = document.createElement('h1');
-
-
 
     const newtask = document.createElement('div');
     const addTaskBtn = document.createElement('button');
