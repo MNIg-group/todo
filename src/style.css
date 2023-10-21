@@ -111,11 +111,17 @@ table {
     background-color: var(--glay-color);
 }
 
+tr {
+    display: flex;
+}
+
 td {
     padding: 1rem;
     border: solid var(--black-color);
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
 }
-
 
 thead {
     background-color: var(--black-color);
@@ -274,11 +280,18 @@ button[type="submit"]:active {
     border-radius: 6px;
 }
 
-.edit-button,
 .delete-button {
-    width: 100%;
+    width: 80%;
     height: 100%;
     margin: 0;
+    padding: 1px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.edit-button {
+    width: 50%;
+    height: 100%;
     padding: 1px;
     cursor: pointer;
     background-color: transparent;
