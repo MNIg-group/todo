@@ -496,6 +496,7 @@ const UI = (() =>
     const header = document.createElement('div');
     const head = document.createElement('h1');
     head.innerText = `Projects`;
+    head.style.fontSize = `1.5em`;
     const hButton = document.createElement('button');
     hButton.innerText = `Add Project`;
     header.appendChild(head);
@@ -650,9 +651,20 @@ const UI = (() =>
     mainPage.classList.add('mainpage');
     const mainHeader = document.createElement('h1');
 
+    const sideToggle = document.createElement('button');
+    sideToggle.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+    sideToggle.classList.add("toggle");
+    sideToggle.addEventListener('click', () =>
+    {
+        sideBar.classList.toggle("hidden");
+    })
+
+    mainPage.appendChild(sideToggle);
+
     const newtask = document.createElement('div');
     const addTaskBtn = document.createElement('button');
     addTaskBtn.innerHTML = `<i class="fa-solid fa-plus"></i> <p>Add Task</p>`;
+    // addTaskBtn.classList.add("add-task");
     addTaskBtn.addEventListener('click', () =>
     {
         AddTask.classList.toggle('hidden');

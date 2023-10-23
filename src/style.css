@@ -10,6 +10,10 @@
     scroll-behavior: smooth;
 }
 
+.toggle {
+    visibility: hidden;
+}
+
 .icon {
     color: var(--white-color);
     font-weight: bold;
@@ -27,6 +31,10 @@ body {
     background-color: whitesmoke;
 }
 
+.toggle {
+    visibility: none;
+}
+
 .todoRoot {
     display: flex;
     position: relative;
@@ -36,7 +44,6 @@ body {
 }
 
 .sidebar {
-    width: 20%;
     height: 100vh;
     display: flex;
     justify-content: space-between;
@@ -55,18 +62,19 @@ body {
 .list {
     overflow-y: auto;
     height: 80%;
+    padding: 0;
     padding-bottom: 2rem;
     margin-top: 1rem;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .projectBtn {
     background-color: transparent;
-    margin: 1px 1rem;
+    margin: 1rem;
     border-radius: 6px;
     padding: 1rem;
-    font-size: medium;
     font-weight: 800;
     border-color: var(--glay-color);
     cursor: pointer;
@@ -84,7 +92,6 @@ body {
 .mainpage {
     padding: 2rem;
     overflow-y: scroll;
-    width: 80%;
     height: 100vh;
 }
 
@@ -106,7 +113,6 @@ body {
 
 
 table {
-    width: 80%;
     border-radius: 5px;
     background-color: var(--glay-color);
 }
@@ -120,7 +126,7 @@ td {
     border: solid var(--black-color);
     display: flex;
     justify-content: space-between;
-    width: 200px;
+
 }
 
 thead {
@@ -131,13 +137,17 @@ thead {
 .flex {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    align-items: center;
 }
 
 .flex>button {
     cursor: pointer;
-    padding: .3rem 1rem;
+    padding: .2rem 1rem;
     border-radius: 5px;
+    margin-left: .1rem;
 }
+
 
 /* forms */
 .form {
@@ -258,13 +268,12 @@ button[type="submit"]:active {
 }
 
 .hidden {
-    top: -80%;
     visibility: hidden;
 }
 
 .addTask {
     width: 80%;
-    margin: 2rem;
+    margin: 1rem;
 }
 
 
@@ -272,7 +281,7 @@ button[type="submit"]:active {
     cursor: pointer;
     display: flex;
     gap: 1rem;
-    padding: 1rem;
+    padding: .6rem;
     margin: auto;
     font-weight: bold;
     font-size: medium;
@@ -302,3 +311,73 @@ button[type="submit"]:active {
     font-size: medium;
     font-weight: bold;
 }
+
+
+/* =========================================================================
+                      Responsiveness of the website                  
+   ========================================================================= */
+
+/* For Desktop View */
+@media screen and (min-width: 1024px) {
+
+    .mainpage {
+
+        width: 100%;
+    }
+
+    table {
+
+        width: 70%;
+    }
+
+    .projectBtn {
+        width: 100%;
+    }
+
+    td {
+        width: 200px;
+    }
+
+}
+
+/* /* For Tablet View */
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    body {
+        font-size: .6em;
+    }
+
+    table {
+        width: 70%;
+    }
+
+    td {
+        width: 7rem;
+    }
+}
+
+/* For Mobile Portrait View */
+@media screen and (max-device-width: 480px) {
+    .sidebar {
+        padding-top: 3rem;
+        z-index: 99;
+    }
+
+    .toggle {
+        z-index: 100;
+        visibility: visible;
+        position: absolute;
+        top: 2%;
+        left: 2%;
+        cursor: pointer;
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .mainpage {
+        position: absolute;
+        min-width: 100%;
+    }
+}
+
+/* For Mobile Landscape View */
+/* @media screen and (max-device-width: 640px) {} */
